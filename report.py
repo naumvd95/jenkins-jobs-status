@@ -23,30 +23,28 @@ for job in job_instance:
                 count+=1
                 counter = '#'+str(count)
                 names = job['name']
-                print counter+' '+job['name']
+                print(counter+' '+job['name'])
                 if len(server.get_job_info(job['name'])['healthReport'])>1:
                     url = server.get_job_info(job['name'])['lastFailedBuild']['url']+'testReport'
                     failed_number = server.get_job_info(job['name'])['lastFailedBuild']['number']
-                    output = (server.get_build_console_output(job['name'], failed_number)).encode('utf-8')
-                    print 'testReport\n'+url
-                    print '-'*160
-                    print 'console output\n'+output
-                    print '=' * 160
+                    output = server.get_build_console_output(job['name'], failed_number)
+                    print('testReport\n'+url)
+                    print ('-'*160)
+                    print ('console output\n'+output)
+                    print ('=' * 160)
+
 
                 else:
                     url = server.get_job_info(job['name'])['lastFailedBuild']['url']+ 'console'
                     failed_number=server.get_job_info(job['name'])['lastFailedBuild']['number']
-                    output = (server.get_build_console_output(job['name'],failed_number)).encode('utf-8')
-                    print ' testReport does not exist\n'+url
-                    print '-'*160
-                    print 'console output\n'+output
-                    print '='*160
+                    output = server.get_build_console_output(job['name'],failed_number)
+                    print (' testReport does not exist\n'+url)
+                    print ('-'*160)
+                    print ('console output\n'+output)
+                    print ('='*160)
                 job_file = open(job['name'],'w')
-                job_file.writelines(job['name'])
-                job_file.write('\n')
-                job_file.write(url)
-                job_file.write('\n')
-                job_file.write(output)
+                info = (job['name'] + '\n'+('-'*80)+'\n'+ url+'\n'+('-'*80)+ '\n' + output).encode('utf-8')
+                job_file.write(info)
                 job_file.close()
                 csvwriter.writerow([counter, names, url])
-print "all checked jobs: " + str(alljobs)
+print ("all checked jobs: " + str(alljobs))
