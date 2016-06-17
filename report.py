@@ -4,7 +4,7 @@ import csv
 PP=pprint.PrettyPrinter()
 JENKINS_HOST='172.18.170.69'
 JENKINS_PORT='8080'
-args=['9.0.build','9.0.regression','.regression','8.0.contrail','7.0']
+args=['9.0.','9.0.regression','.regression','8.0.contrail','7.0']
 jenkins_url = 'http://'+JENKINS_HOST+':'+JENKINS_PORT
 server = jenkins.Jenkins(jenkins_url)
 job_instance = server.get_all_jobs()
